@@ -8,6 +8,16 @@ saytunes は、再生中の楽曲のアーティスト名とタイトルをiTune
 + iTunes から楽曲のタイトル・アーティスト名を取得し、表示  
 + 取得した楽曲情報を「できるだけ忠実に」sayコマンドで喋らせる  
 
+ファイルについて
+-------
++ saytunes.rb (本体)
++ install.rb (say2.rb インストーラ)
++ rss.rb (はてなキーワードのAPIを叩きます)
++ yahoo_api.rb (Yahoo!関連のAPIを叩きます)
++ artist.scpt (AppleScript)
++ title.scpt (AppleScript)
++ play.scpt (AppleScript)
+
 必要なもの
 --------------
 + Yahoo! デベロッパーネットワーク アプリケーションID  
