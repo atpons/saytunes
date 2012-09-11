@@ -3,6 +3,7 @@ require 'open-uri'
 require "pp"
 require "./rss.rb"
 require "./yahoo_api.rb"
+require 'rexml/document'
 
 #iTunesから情報取得
 artist = `osascript artist.scpt`
@@ -47,8 +48,10 @@ end
 
 #アーティスト取得結果のはてなキーワードor形態素解析
 artist_result = []
+llresult = []
 artist_keyword.each_with_index do |artist , i|
   hatena_artist = hatena(artist)
+  llresult.push(hatena_artist)
   emp = hatena_artist.empty?
   case emp
   when true
@@ -71,6 +74,20 @@ puts "タイトル: " + title
 artist_joined = artist_result.join
 title_joined = title_result.join
 
+#デバッグモード用
+case ARGV[0].to_s
+when "-debug"
+  puts "[Debug mode (Saying Information)]"
+  puts "= Keyphrase Analysis ="
+  puts "Artist: " + artist_keyword.to_s
+  puts "= Hatena Analysis ="
+  puts "Artist: " + llresult.to_s
+  puts "= All result="
+  puts "Artist: " + artist_result.to_s
+  puts "Title: " + title_result.to_s
+else
+end
+
 #sayさせる
 case system("ruby 2011415/say2.rb " + '"再生中の楽曲は、 ' + artist_joined + ' で、 ' + title_joined + ' です。"')
 when true
@@ -78,6 +95,8 @@ when true
 when false
   puts "== Not found say2.rb and saying single speaker. =="
   system("say " + '"再生中の楽曲は、 ' + artist_joined + ' で、 ' + title_joined + ' です。"')
+else
 end
 
+#再生処理
 title = `osascript play.scpt`
